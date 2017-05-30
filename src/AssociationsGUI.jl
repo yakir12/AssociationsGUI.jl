@@ -286,7 +286,7 @@ function main(folder)
         g[0, length(a.runs) + 1] = widget(addrun)
         for (x, p) in enumerate(a.pois), (y, r) in enumerate(a.runs)
                 key = (p, r)
-                cb = checkbox(key in a.associations)
+                cb = checkbox(key in a)
                 foreach(cb) do tf
                     tf ? push!(a, key) : delete!(a, key)
                 end
