@@ -15,7 +15,9 @@
 4. To test the package (not necessary), copy: `Pkg.test("Associations"); Pkg.test("AssociationsGUI")` and paste it in the Julia-terminal, press enter
 5. You can close the Julia-terminal after it's done running
 
-The user's interaction with this package is via GUI. You will find an executable file called `BeetleLog.jl` in your home directory. Double-click it to start the program. **Note the [Troubleshooting](#troubleshooting) section for problems with this feature.**
+The user's interaction with this package is via GUI. 
+> You will find an executable file called `BeetleLog.jl` in your home directory. Double-click it to start the program. **Note the [Troubleshooting](#troubleshooting) section for problems with this feature.**
+Start a Julia terminal, copy: ``
 
 ## How to use
 
