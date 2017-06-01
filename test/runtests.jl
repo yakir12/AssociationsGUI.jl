@@ -1,3 +1,9 @@
 using AssociationsGUI
 using Base.Test
-@test true
+
+
+@testset "VideoFile" begin 
+
+    @test true
+
+end

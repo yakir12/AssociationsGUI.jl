@@ -13,7 +13,7 @@ function second2hms(x::Second)::Dict{DataType, Int}
 end
 shorten(s::String, k::Int) = length(s) > 2k + 1 ? s[1:k]*"…"*s[(end-k + 1):end] : s
 function shorten(vfs::Set{String}, m)
-    nmax = maximum(length.(vfs))
+    nmax = maximum(map(length, vfs))
     n = min(m, nmax) - 1
     while n < nmax
         n += 1

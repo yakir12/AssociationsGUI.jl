@@ -123,6 +123,7 @@ That is all! You will now find a new folder, `log`, in the videos folder with 4 
 3. `runs.csv`: All the metadata and their values in the logged runs. The last field is the number of replicates for each of the runs (calculated automatically).
 4. `associations.csv`: A two column table where the first column is the POI number and the second column is the Run number (both relative to the row numbers in the `pois.csv` and `runs.csv` files, excluding the header row of course). 
 
+If you need to add video files, POIs, or metadata for the Runs, you can do so even after finishing logging some data. While you can always remove POIs from the `poi.csv` file, you can not remove any of the metadata in the `run.csv` file, nor should you delete any of the video files.   
 ## Troubleshooting
 - *The initial navigation window is stuck, I can't choose the videos folder*
 If this happens you'll have to run the program from within Julia:
