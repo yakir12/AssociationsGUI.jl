@@ -15,4 +15,13 @@ using Base.Test
     @test AssociationsGUI.findshortfile("aaa", Dict("aaa" => "b", "c" => "aaa")) == "c"
     @test_throws ErrorException AssociationsGUI.findshortfile("aaa", Dict("aaa" => "b", "c" => "aa")) == "c"
 
+    t = (1977, 06, 01, 12, 0, 1)
+    d1 = AssociationsGUI.validargs(:a, t...)
+    @test !isnull(d1)
+    @test d1.value == DateTime(t...)
+
+    t = (1977, 02, 31, 12, 0, 1)
+    d2 = AssociationsGUI.validargs(:a, t...)
+    @test isnull(d2)
+
 end

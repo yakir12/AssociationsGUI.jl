@@ -339,7 +339,7 @@ function checkvideos(a::Association, folder::String)
     g[4,0] = Label("Hour")
     g[5,0] = Label("Minute")
     g[6,0] = Label("Second")
-    g[7,0] = Label("Millisecond")
+    #g[7,0] = Label("Millisecond")
     goodtimes = fill(Signal(true), length(ft))
     for (i, (name, vf)) in enumerate(ft)
         datetime = vf.datetime
@@ -350,14 +350,14 @@ function checkvideos(a::Association, folder::String)
         H = spinbutton(0:23, value = Dates.Hour(datetime).value)
         M = spinbutton(0:59, value = Dates.Minute(datetime).value)
         S = spinbutton(0:59, value = Dates.Second(datetime).value)
-        MS = spinbutton(0:999, value = Dates.Millisecond(datetime).value)
+        #MS = spinbutton(0:999, value = Dates.Millisecond(datetime).value)
         setproperty!(y.widget, :width_request, 5)
         setproperty!(m.widget, :width_request, 5)
         setproperty!(d.widget, :width_request, 5)
         setproperty!(H.widget, :width_request, 5)
         setproperty!(M.widget, :width_request, 5)
         setproperty!(S.widget, :width_request, 5)
-        setproperty!(MS.widget, :width_request, 5)
+        #setproperty!(MS.widget, :width_request, 5)
         g[0,i] = play.widget
         g[1,i] = y.widget
         g[2,i] = m.widget
@@ -365,8 +365,9 @@ function checkvideos(a::Association, folder::String)
         g[4,i] = H.widget
         g[5,i] = M.widget
         g[6,i] = S.widget
-        g[7,i] = MS.widget
-        dt = map(tuple, y, m, d, H, M, S, MS)
+        #g[7,i] = MS.widget
+        dt = map(tuple, y, m, d, H, M, S)
+        #dt = map(tuple, y, m, d, H, M, S, MS)
         time_is_good = map(x -> isnull(validargs(DateTime, x...)), dt) 
         goodtimes[i] = time_is_good
         goodtime = filterwhen(time_is_good, value(dt), dt)
@@ -385,7 +386,8 @@ function checkvideos(a::Association, folder::String)
         destroy(win)
     end
 
-    g[0:7, length(ft) + 1] = widget(done)
+    g[0:6, length(ft) + 1] = widget(done)
+    #g[0:7, length(ft) + 1] = widget(done)
     win = Window(g, "LogBeetle: Check videos", 1, 1)
     showall(win)
 
