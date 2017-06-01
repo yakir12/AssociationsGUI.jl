@@ -12,4 +12,7 @@ using Base.Test
     @test length(AssociationsGUI.shorten("1234567", 3)) == 7
     @test length(AssociationsGUI.shorten("1234567", 2)) == 5
 
+    @test AssociationsGUI.findshortfile("aaa", Dict("aaa" => "b", "c" => "aaa")) == "c"
+    @test_throws ErrorException AssociationsGUI.findshortfile("aaa", Dict("aaa" => "b", "c" => "aa")) == "c"
+
 end
