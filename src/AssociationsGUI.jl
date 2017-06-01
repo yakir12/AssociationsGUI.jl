@@ -367,7 +367,7 @@ function checkvideos(a::Association, folder::String)
         g[6,i] = S.widget
         g[7,i] = MS.widget
         dt = map(tuple, y, m, d, H, M, S, MS)
-        time_is_good = map(x -> isnull(Dates.validargs(DateTime, x...)), dt) 
+        time_is_good = map(x -> isnull(validargs(DateTime, x...)), dt) 
         goodtimes[i] = time_is_good
         goodtime = filterwhen(time_is_good, value(dt), dt)
         vf2 = map(goodtime) do x
