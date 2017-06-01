@@ -1,5 +1,5 @@
 function second2hms(x::Second)::Dict{DataType, Int}
-    ps = canonicalize(Dates.CompoundPeriod(x))
+    ps = Dates.CompoundPeriod(Dates.CompoundPeriod(x))
     a = Dict{DataType, Int}(k => 0 for k in [Hour, Minute, Second])
     ts = [Day, Week, Month, Year]
     for p in ps.periods
