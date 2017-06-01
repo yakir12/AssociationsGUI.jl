@@ -126,10 +126,6 @@ function run_gui(o, metadata)
     return run
 end
 
-folder = "/home/yakir/.julia/v0.6/AssociationsGUI/test/videofolder"
-
-
-
 function main(folder)
 
     # poi data
