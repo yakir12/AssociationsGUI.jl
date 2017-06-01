@@ -6,7 +6,7 @@ include(joinpath(Pkg.dir("AssociationsGUI"), "src", "util.jl"))
 
 export main
 
-function poi_gui(o, points, files)
+function poi_gui(o, points, files, folder)
 
     #data
     shortfiles = keys(files)
@@ -154,7 +154,7 @@ function main(folder)
     end
 
     poi_ = map(addpoi, init = poi_old) do _
-        poi_gui(value(poi_old), points, files)
+        poi_gui(value(poi_old), points, files, folder)
     end
     poi__ = flatten(poi_)
 
@@ -211,7 +211,7 @@ function main(folder)
                 push!(filemenu, hide_)=#
                 edit_ = MenuItem("Edit")
                 edith = signal_connect(edit_, :activate) do _
-                    poi_ = poi_gui(p, points, files)
+                    poi_ = poi_gui(p, points, files, folder)
                     poi_new = droprepeats(poi_)
                     foreach(poi_new, init = nothing) do n
                         replace!(a, p, n)
