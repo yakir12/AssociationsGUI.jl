@@ -17,11 +17,10 @@ using Base.Test
 
     t = (1977, 06, 01, 12, 0, 1)
     d1 = AssociationsGUI.validargs(:a, t...)
-    @test !isnull(d1)
-    @test d1.value == DateTime(t...)
+    @test isnull(d1)
 
     t = (1977, 02, 31, 12, 0, 1)
     d2 = AssociationsGUI.validargs(:a, t...)
-    @test isnull(d2)
+    @test !isnull(d2)
 
 end

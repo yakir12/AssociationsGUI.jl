@@ -42,7 +42,7 @@ function findshortfile(v::String, d::Dict{String, String})::String
     error("Couldn't find $v in $d")
 end
 function validargs(_, y, m, d, rest...)
-    0 < m < 13 || return Nullable{ArgumentError}("kaka")
-    0 < d < daysinmonth(y,m)+1 || return Nullable{ArgumentError}("kaka")
+    0 < m < 13 || return Nullable{ArgumentError}(ArgumentError("Month: $m out of range (1:12)"))
+    0 < d < daysinmonth(y,m)+1 || return Nullable{ArgumentError}(ArgumentError("Day: $d out of range (1:$(daysinmonth(y,m)))"))
     return Nullable{ArgumentError}()
 end
