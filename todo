@@ -1,5 +1,11 @@
+think about time shifts that are spoken in the film | id:3d6fbdb06d961ab594a88b68d9f67160c84e5a3b
+take care of weird file names | id:5fd93b9174bf6039d1c817d63211636125a0874c
 build a presentation | id:813295f2e08434874f8b83d48260f1c23f4dff93
 fix the double click problem of the executable | id:93f77124cff56dfcf61625417a26ffa40f513366
+prevent user from adding more pois/runs while a poi/run dialog is open | id:9902bcc1f7bdb8f63af6fde59d6583dd8b67580d
+fstop = fstart == fstop ? fstart : fstop | id:c0a0f56062ed971848aba5143ea40fc36fb971a5
 build some of the next steps to show off | id:c75da90c106bed2b4c5e4fe8d362860c71ac1352
+close all video players at the end | id:ca9a9258995d8fe2e9e502dcd998ff2559b14e67
+arrange the video files by date in the dropdown boxes | id:daa350f9b0c82f15c5b26e911899e363d8e233d0
 add hide | id:f09fb7e058a6cfe939dfd6bda50742769eb72488
 build good tests, maybe refacture the code into more functions allowing better testing | id:f28096a3f7aec4dedec73b7eac1d0d24f18b7e51

@@ -14,6 +14,8 @@ function poi_gui(o, points, files, folder)
     name = dropdown(points, value = o.name)
     fstart = dropdown(shortfiles, value = o.start.file)
     fstop = dropdown(shortfiles, value = o.stop.file)
+    playstart = button(">")
+    playstop = button(">")
     dt = second2hms(o.start.time)
     s1 = spinbutton(0:59, orientation = "v", value = dt[Second])
     m1 = spinbutton(0:59, orientation = "v", value = dt[Minute])
@@ -34,39 +36,42 @@ function poi_gui(o, points, files, folder)
     setproperty!(widget(m2), :width_request, 5)
     setproperty!(widget(h2), :width_request, 5)
     g = Grid()
-    g[5,0] = Label("POI:")
+    g[6,0] = Label("POI:")
     g[0,1] = Label("Start:")
-    g[2,0] = Label("H")
-    g[3,0] = Label("M")
-    g[4,0] = Label("S")
+    g[2,0] = Label("Play")
+    g[3,0] = Label("H")
+    g[4,0] = Label("M")
+    g[5,0] = Label("S")
     g[0,2] = Label("Stop:")
-    g[5,1] = Label("Label:")
-    g[5,2] = Label("Comment:")
-    g[6,0] = widget(name)
+    g[6,1] = Label("Label:")
+    g[6,2] = Label("Comment:")
+    g[7,0] = widget(name)
     g[1,1] = widget(fstart)
-    g[2,1] = widget(h1)
-    g[3,1] = widget(m1)
-    g[4,1] = widget(s1)
+    g[2,1] = widget(playstart)
+    g[3,1] = widget(h1)
+    g[4,1] = widget(m1)
+    g[5,1] = widget(s1)
     g[1,2] = widget(fstop)
-    g[2,2] = widget(h2)
-    g[3,2] = widget(m2)
-    g[4,2] = widget(s2)
-    g[6,1] = widget(label)
-    g[6,2] = widget(comment)
+    g[2,2] = widget(playstop)
+    g[3,2] = widget(h2)
+    g[4,2] = widget(m2)
+    g[5,2] = widget(s2)
+    g[7,1] = widget(label)
+    g[7,2] = widget(comment)
     g[0:1,0] = widget(done)
     setproperty!(g, :row_spacing, 5)
 
     # function 
-    tsksstrt, rsltsstrt = async_map(nothing, signal(fstart)) do f²
-        openit(joinpath(folder, files[f²]))
-        return nothing
-    end
-    tsksstp, rsltsstp = async_map(nothing, signal(fstop)) do f²
-        openit(joinpath(folder, files[f²]))
-        return nothing
-    end
     f1 = map(x -> files[x], fstart)
     f2 = map(x -> files[x], fstop)
+    tsksstrt, rsltsstrt = async_map(nothing, signal(playstart)) do _
+        openit(joinpath(folder, value(f1)))
+        return nothing
+    end
+    tsksstp, rsltsstp = async_map(nothing, signal(playstop)) do _
+        openit(joinpath(folder, value(f2)))
+        return nothing
+    end
     start_point = map(Point, f1, h1, m1, s1)
     stop_point = map(Point, f2, h2, m2, s2)
     time_correct = map(start_point, stop_point) do p1, p2

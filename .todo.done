@@ -1,4 +1,5 @@
 separate the gui from the Associations module so that testing can be complete and faster | id:157023557653993dc5362b80568b0bab09347679
+add a small play button instead of the auto play | id:244a3e30d4426d52a913072733c8a5b45ffcd1e4
 clean the documentation | id:6b08f68eb751375ced6270a21da303ab0e3efe28
 test the builds with the latest reactive, do I need the latests | id:7bda181a8f6479d20311096a1826824f7f04694d
 check the miliseconds | id:b243e641d28a718b39fabb04e5aa0143bf22e51d
