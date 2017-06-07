@@ -1,7 +1,7 @@
 __precompile__()
 module AssociationsGUI
 
-using Gtk.ShortNames, GtkReactive, Associations, Base.Dates
+using Gtk.ShortNames, GtkReactive, Associations, Base.Dates, DataStructures
 include(joinpath(Pkg.dir("AssociationsGUI"), "src", "util.jl"))
 
 export main
@@ -158,8 +158,10 @@ end
 
 function main(folder)
 
+    vfs = getVideoFiles(folder)
+    
     # poi data
-    files = shorten(getVideoFiles(folder), 30)
+    files = shorten(OrderedSet([vf.file for vf in vfs]) ,30)
     points = strip.(vec(readcsv(joinpath(folder, "metadata", "poi.csv"), String)))
 
     # run data
@@ -325,7 +327,7 @@ function main(folder)
             end
             save(folder, a)
             destroy(w)
-            checkvideos(a, folder)
+            checkvideos(a, folder, vfs)
         end
         clears = Button("Clear")
         clearh = signal_connect(clears, :clicked) do _
@@ -345,19 +347,20 @@ function main(folder)
 
 end
 
-function unique_videos(a::Association, folder::String)
-    vfs = loadVideoFiles(folder)
-    for poi in a.pois, vf in [poi.start.file, poi.stop.file]
-        if !haskey(vfs, vf)
-            vfs[vf] = VideoFile(folder, vf)
+function return_selected_videos(a::Association, vfs::OrderedSet{VideoFile})::Dict{String, VideoFile}
+    uvfs = Set{String}(vf for poi in a.pois for vf in [poi.start.file, poi.stop.file])
+    ft = Dict{String, VideoFile}()
+    for vf in vfs
+        if vf.file in uvfs
+            ft[vf.file] = vf
         end
     end
-    return vfs
+    return ft
 end
 
-function checkvideos(a::Association, folder::String)
+function checkvideos(a::Association, folder::String, vfs::OrderedSet{VideoFile})
     # data
-    ft = unique_videos(a, folder)
+    ft = return_selected_videos(a, vfs)
     # widgets
     done = button("Done")
     # layout
@@ -372,15 +375,14 @@ function checkvideos(a::Association, folder::String)
     #g[7,0] = Label("Millisecond")
     goodtimes = fill(Signal(true), length(ft))
     for (i, (name, vf)) in enumerate(ft)
-        datetime = vf.datetime
-        play = button(name)
-        y = spinbutton(1:10000, value = Dates.Year(datetime).value)
-        m = spinbutton(1:12, value = Dates.Month(datetime).value)
-        d = spinbutton(1:31, value = Dates.Day(datetime).value)
-        H = spinbutton(0:23, value = Dates.Hour(datetime).value)
-        M = spinbutton(0:59, value = Dates.Minute(datetime).value)
-        S = spinbutton(0:59, value = Dates.Second(datetime).value)
-        #MS = spinbutton(0:999, value = Dates.Millisecond(datetime).value)
+        play = button(vf.file)
+        y = spinbutton(1:10000, value = Dates.Year(vf.datetime).value)
+        m = spinbutton(1:12, value = Dates.Month(vf.datetime).value)
+        d = spinbutton(1:31, value = Dates.Day(vf.datetime).value)
+        H = spinbutton(0:23, value = Dates.Hour(vf.datetime).value)
+        M = spinbutton(0:59, value = Dates.Minute(vf.datetime).value)
+        S = spinbutton(0:59, value = Dates.Second(vf.datetime).value)
+        #MS = spinbutton(0:999, value = Dates.Millisecond(vf.datetime).value)
         setproperty!(y.widget, :width_request, 5)
         setproperty!(m.widget, :width_request, 5)
         setproperty!(d.widget, :width_request, 5)
@@ -402,17 +404,17 @@ function checkvideos(a::Association, folder::String)
         goodtimes[i] = time_is_good
         goodtime = filterwhen(time_is_good, value(dt), dt)
         vf2 = map(goodtime) do x
-            ft[vf.file] = VideoFile(vf.file, DateTime(x...))
+            ft[name] = VideoFile(vf.file, DateTime(x...))
         end
         tasksplay, resultsplay = async_map(nothing, signal(play)) do _
-            openit(joinpath(folder, name))
+            openit(joinpath(folder, vf.file))
         end
     end
 
     goodtime = map(&, goodtimes...)
     clicked = filterwhen(goodtime, Void(), signal(done))
     foreach(clicked,  init = nothing) do _
-        save(folder, ft)
+        save(folder, Set{VideoFile}(values(ft)))
         destroy(win)
     end
 
