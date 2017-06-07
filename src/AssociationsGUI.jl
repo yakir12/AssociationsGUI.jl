@@ -77,6 +77,31 @@ function poi_gui(o, points, files, folder)
     time_correct = map(start_point, stop_point) do p1, p2
         p1.file != p2.file || p1.time <= p2.time
     end
+    foreach(h1) do h
+        if !value(time_correct)
+            dt = second2hms(value(start_point).time)
+            push!(h2, dt[Hour])
+            push!(m2, dt[Minute])
+            push!(s2, dt[Second])
+        end
+    end
+    foreach(m1) do m
+        if !value(time_correct)
+            dt = second2hms(value(start_point).time)
+            push!(h2, dt[Hour])
+            push!(m2, dt[Minute])
+            push!(s2, dt[Second])
+        end
+    end
+    foreach(s1) do s
+        if !value(time_correct)
+            dt = second2hms(value(start_point).time)
+            push!(h2, dt[Hour])
+            push!(m2, dt[Minute])
+            push!(s2, dt[Second])
+        end
+    end
+
     p1 = filterwhen(time_correct, o.start, start_point)
     p2 = filterwhen(time_correct, o.stop, stop_point)
     poi_temp = map(POI, name, p1, p2, label, comment)
