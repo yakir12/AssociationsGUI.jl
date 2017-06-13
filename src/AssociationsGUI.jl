@@ -414,7 +414,7 @@ function checkvideos(a::Association, folder::String, vfs::OrderedSet{VideoFile})
     goodtime = map(&, goodtimes...)
     clicked = filterwhen(goodtime, Void(), signal(done))
     foreach(clicked,  init = nothing) do _
-        save(folder, Set{VideoFile}(values(ft)))
+        save(folder, OrderedSet{VideoFile}(values(ft)))
         destroy(win)
     end
 
