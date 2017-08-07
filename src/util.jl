@@ -25,15 +25,24 @@ function shorten(vfs::OrderedSet{String}, m)
 end
 
 function openit(f::String)
-    if isfile(f)
-        cmd = is_windows() ? `explorer $f` : is_linux() ? `xdg-open $f` : is_apple() ? `open $f` : error("Unknown OS")
-        return run(ignorestatus(cmd))
-        #stream, proc = open(cmd)
-        return proc
-        # try to see if you can kill the spawned process (closing the movie player). this will be useful for testing this, and for managing shit once the user is done (not sure if all the players automatically close when the user quits julia)
+    isfile(f) || systemerror("$f not found", true)
+    cmd = if is_windows()
+        `explorer $f`
+    elseif is_linux()
+        `xdg-open $f` 
+    elseif is_apple()
+        try 
+            `open -a "quicktime player" $f`
+        catch 
+            `open $f`
+        end
     else
-        systemerror("$f not found", true)
+        error("Unknown OS")
     end
+    return run(ignorestatus(cmd))
+        #stream, proc = open(cmd)
+        # return proc
+        # try to see if you can kill the spawned process (closing the movie player). this will be useful for testing this, and for managing shit once the user is done (not sure if all the players automatically close when the user quits julia)
 end
 function findshortfile(v::String, d::Dict{String, String})::String
     for k in keys(d)
