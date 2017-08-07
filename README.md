@@ -115,7 +115,7 @@ By clicking on a Run or POI, you can choose to:
 
 When done, press `Save`. To clear the board and start from scratch press `Clear`. 
 
-Next, the program will attempt to automatically extract the original filming dates and times of the video files. It is however *imperrative* that you make sure these estimates are indeed correct. You will therefore be presented with another window containing all the videos you logged and their estimated dates and times. Adjust these accordingly (pressing the video filename starts playing the video). When finished press `Done`.
+Next, the program will attempt to automatically extract the original filming dates and times of the video files. Althhough is it likely that the dates and times the program will extract are correct, make sure these are indeed correct and adjust them accordingly (a new window will containing all the videos you logged and their estimated dates and times). Pressing the video filename starts playing the video. 
 
 That is all! You will now find a new folder, `log`, in the videos folder with 4 files in it: 
 1. `files.csv`: all the video file names, dates and times of when the video was recorded.
