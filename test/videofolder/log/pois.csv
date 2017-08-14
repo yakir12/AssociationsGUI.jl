@@ -1,9 +1,4 @@
 name,start file,start time (seconds),stop file,stop time (seconds),label,comments
 Nest,b.mp4,0,b.mp4,1,,
-Home,b.mp4,1,a.mp4,2,,
-Nest,b.mp4,0,b.mp4,0,,
-Search,b.mp4,0,a.mp4,540,jhgjg,kjgjhg
-Search,b.mp4,60,a.mp4,540,jhgjg,kjgjhg
-Nest,b.mp4,0,b.mp4,300,,
-Search,b.mp4,300,b.mp4,600,,
-Nest,a.mp4,32400,b.mp4,0,,
+South,b.mp4,0,a.mp4,7,,
+Search,a.mp4,5,a.mp4,7,,
