@@ -1,10 +1,10 @@
 __precompile__()
 module AssociationsGUI
 
-using Gtk.ShortNames, GtkReactive, Associations, Base.Dates, DataStructures
+using Gtk.ShortNames, GtkReactive, Associations, Base.Dates, DataStructures, HDF5
 include(joinpath(Pkg.dir("AssociationsGUI"), "src", "util.jl"))
 
-export main
+export main, coordinates_gui
 
 function poi_gui(o, points, files, folder)
 
@@ -209,8 +209,9 @@ function main(folder)
     bind!(run_old, run, initial=false)
 
 
-    w = Window("LogBeetle")
-    push!(w, g)
+    w = Window("LogBeetle", 1000,500)
+    s = ScrolledWindow(g)
+    push!(w, s)
     showall(w)
     added = merge(poi, run)
     association = foldp(push!, loadAssociation(folder), added)
@@ -430,9 +431,48 @@ function checkvideos(a::Association, folder::String, vfs::OrderedSet{VideoFile})
     wait(c)=#
 end
 
-
-
-
-
+function coordinates_gui(folder::String)
+    w = Window("LogBeetle", 500,500)
+    info_label = Label("")
+    c = Condition()
+    ok = button("OK")
+    foreach(ok) do _
+        notify(c)
+    end
+    b = Box(:v)
+    push!(b, info_label, ok)
+    s = ScrolledWindow(b)
+    push!(w, s)
+    a = loadAssociation(folder)
+    for (i, p) in enumerate(a.pois)
+        f5name = joinpath(folder, "log", "$i.h5")
+        isfile(f5name) && continue
+        r = String[]
+        push!(r, """<b>POI</b> 
+        Name: <i>$(p.name)</i>
+        Label: <i>$(p.label)</i>
+        Comment: <i>$(p.comment)</i>""")
+        for (pp, rr) in a.associations
+            if p == pp
+                push!(r, """ 
+                      <b>Run</b>
+                      Repetition: <i>$(rr.repetition)</i>""")
+                for (k, v) in rr.run.metadata
+                    push!(r, "$k: <i>$v</i>")
+                end
+                push!(r, "Comment: <i>$(rr.run.comment)</i>")
+            end
+        end
+        info = join(r, "\n")
+        G_.markup(info_label, info)
+        showall(w)
+        wait(c)
+        xyt = rand(10,3)
+        h5open(f5name, "w") do o
+            @write o xyt
+        end
+    end
+    destroy(w)
+end
 
 end # module
