@@ -16,14 +16,14 @@ function poi_gui(o, points, files, folder)
     fstop = dropdown(shortfiles, value = o.stop.file)
     playstart = button(">")
     playstop = button(">")
-    dt = second2hms(o.start.time)
-    s1 = spinbutton(0:59, orientation = "v", value = dt[Second])
-    m1 = spinbutton(0:59, orientation = "v", value = dt[Minute])
-    h1 = spinbutton(0:1000, orientation = "v", value = dt[Hour])
-    dt = second2hms(o.stop.time)
-    s2 = spinbutton(0:59, orientation = "v", value = dt[Second])
-    m2 = spinbutton(0:59, orientation = "v", value = dt[Minute])
-    h2 = spinbutton(0:1000, orientation = "v", value = dt[Hour])
+    dt = timewidget(Time(0,0,0) + o.start.time)
+    s1 = dt.second
+    m1 = dt.minute
+    h1 = dt.hour
+    dt = timewidget(Time(0,0,0) + o.stop.time)
+    s2 = dt.second
+    m2 = dt.minute
+    h2 = dt.hour
     label = textarea(o.label)
     comment = textarea(o.comment)
     done = button("Done")
@@ -157,6 +157,7 @@ function run_gui(o, metadata)
 end
 
 function main(folder)
+    w = Window("LogBeetle", 1000,500)
 
     vfs = getVideoFiles(folder)
     
@@ -209,7 +210,6 @@ function main(folder)
     bind!(run_old, run, initial=false)
 
 
-    w = Window("LogBeetle", 1000,500)
     s = ScrolledWindow(g)
     push!(w, s)
     showall(w)

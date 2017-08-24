@@ -88,7 +88,7 @@ Location, South Africa, Sweden, Spain
 Condition, Transfered, Covered
 Specimen ID,
 ```
-Each row describes a metadatum. The first value (values are separated by a comma *`.csv`: comma separated values*) describes the name of that specific metadatum. The values following that are the possible values said metadatum can have. For instance, in the example above, `Condition` can take only two values: `Transfered` or `Covered`. In case the metadatum can not be limited to a finite number of discrete values and can only be described in free-text, leave the following values empty (as in the case of the `Specimen ID` in the example above). **Note: There is no need to include a `Comment` metadatum in the `run.csv` file. A `Comment` section is included in all Runs.**
+Each row describes a metadatum. The first value (values are separated by a comma *`.csv`: comma separated values*) describes the name of that specific metadatum. The values following that are the possible values said metadatum can have. For instance, in the example above, `Condition` can take only two values: `Transfered` or `Covered`. In case the metadatum can not be limited to a finite number of discrete values and can only be described in free-text, leave the following values empty (as in the case of the `Specimen ID` in the example above). **Note: There is no need to include a `Comment` metadatum in the `run.csv` file. A `Comment` section is included by default in all Runs.**
 
 You can have as many or as few metadata as you like, keeping only the metadata and POIs that are relevant to your specific setups. This flexibility allows the user to keep different `poi.csv` and `run.csv` metadata files in each of their videos folders.
 
