@@ -16,46 +16,34 @@ function poi_gui(o, points, files, folder)
     fstop = dropdown(shortfiles, value = o.stop.file)
     playstart = button(">")
     playstop = button(">")
-    dt = timewidget(Time(0,0,0) + o.start.time)
-    s1 = dt.second
-    m1 = dt.minute
-    h1 = dt.hour
-    dt = timewidget(Time(0,0,0) + o.stop.time)
-    s2 = dt.second
-    m2 = dt.minute
-    h2 = dt.hour
+    start = timewidget(Time(0,0,0) + o.start.time)
+    stop = timewidget(Time(0,0,0) + o.stop.time)
     label = textarea(o.label)
     comment = textarea(o.comment)
     done = button("Done")
 
     # layout
-    setproperty!(widget(s1), :width_request, 5)
-    setproperty!(widget(m1), :width_request, 5)
-    setproperty!(widget(h1), :width_request, 5)
-    setproperty!(widget(s2), :width_request, 5)
-    setproperty!(widget(m2), :width_request, 5)
-    setproperty!(widget(h2), :width_request, 5)
     g = Grid()
     g[6,0] = Label("POI:")
     g[0,1] = Label("Start:")
     g[2,0] = Label("Play")
-    g[3,0] = Label("H")
-    g[4,0] = Label("M")
-    g[5,0] = Label("S")
+    g[3,0] = Label("Time")
+    # g[4,0] = Label("M")
+    # g[5,0] = Label("S")
     g[0,2] = Label("Stop:")
     g[6,1] = Label("Label:")
     g[6,2] = Label("Comment:")
     g[7,0] = widget(name)
     g[1,1] = widget(fstart)
     g[2,1] = widget(playstart)
-    g[3,1] = widget(h1)
-    g[4,1] = widget(m1)
-    g[5,1] = widget(s1)
+    g[3,1] = start.widget
+    # g[4,1] = widget(m1)
+    # g[5,1] = widget(s1)
     g[1,2] = widget(fstop)
     g[2,2] = widget(playstop)
-    g[3,2] = widget(h2)
-    g[4,2] = widget(m2)
-    g[5,2] = widget(s2)
+    g[3,2] = stop.widget
+    # g[4,2] = widget(m2)
+    # g[5,2] = widget(s2)
     g[7,1] = widget(label)
     g[7,2] = widget(comment)
     g[0:1,0] = widget(done)
@@ -72,36 +60,15 @@ function poi_gui(o, points, files, folder)
         openit(joinpath(folder, value(f2)))
         return nothing
     end
-    start_point = map(Point, f1, h1, m1, s1)
-    stop_point = map(Point, f2, h2, m2, s2)
-    time_correct = map(start_point, stop_point) do p1, p2
-        p1.file != p2.file || p1.time <= p2.time
+    start_point = map(Point, f1, start.signal)
+    stop_point = map(Point, f2, stop.signal)
+    wrong_time = map(start_point, stop_point) do p1, p2 # true when the times are fucked
+        p1.file == p2.file && p1.time > p2.time
     end
-    foreach(h1) do h
-        if !value(time_correct)
-            dt = second2hms(value(start_point).time)
-            push!(h2, dt[Hour])
-            push!(m2, dt[Minute])
-            push!(s2, dt[Second])
-        end
-    end
-    foreach(m1) do m
-        if !value(time_correct)
-            dt = second2hms(value(start_point).time)
-            push!(h2, dt[Hour])
-            push!(m2, dt[Minute])
-            push!(s2, dt[Second])
-        end
-    end
-    foreach(s1) do s
-        if !value(time_correct)
-            dt = second2hms(value(start_point).time)
-            push!(h2, dt[Hour])
-            push!(m2, dt[Minute])
-            push!(s2, dt[Second])
-        end
-    end
+    correct_stop_time = filterwhen(wrong_time, value(start.signal), start.signal)
+    bind!(stop.signal, correct_stop_time, false, initial=false)
 
+    time_correct = map(!, wrong_time)
     p1 = filterwhen(time_correct, o.start, start_point)
     p2 = filterwhen(time_correct, o.stop, stop_point)
     poi_temp = map(POI, name, p1, p2, label, comment)
