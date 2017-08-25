@@ -4,8 +4,6 @@
 
 [![Coverage Status](https://coveralls.io/repos/yakir12/AssociationsGUI.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/yakir12/AssociationsGUI.jl?branch=master)
 
-[![codecov.io](http://codecov.io/github/yakir12/AssociationsGUI.jl/coverage.svg?branch=master)](http://codecov.io/github/yakir12/AssociationsGUI.jl?branch=master)
-
 `AssociationsGUI.jl` helps scientists log video files and the experiments associated with these files. It outputs four files that together contain all the information necessary to process your videos. By meticulously logging your data early-on, later stages of the data-processing can be efficiently automated.
 
 ## How to install

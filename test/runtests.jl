@@ -1,4 +1,4 @@
-using AssociationsGUI, Base.Dates
+using Associations, AssociationsGUI, Base.Dates
 using Base.Test
 
 
@@ -24,3 +24,9 @@ using Base.Test
     @test !isnull(d2)
 
 end
+
+#=@testset "GUIs" begin
+
+    @test_nowarn AssociationsGUI.poi_gui(POI("a", Point("1",0), Point("2",0), "", ""), ["a", "b"], Dict(string(i) => string(i) for i in 1:2), "a")
+
+end=#
