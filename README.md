@@ -16,15 +16,15 @@
 5. You can close the Julia-terminal after it's done running
 
 ## Quick start
-1. Start a Julia-terminal
-2. Copy and paste the following code in the Julia-terminal:
+1.  Start a Julia-terminal
+2.  Copy and paste the following code in the Julia-terminal:
     ```julia
     using AssociationsGUI
     folder = "<videos folder>"
     main(folder)
     ```
-where `<videos folder>` is the path to the folder that contains all the videos you want to log (so replace `<videos folder>` with the actual path to your videos folder). 
-3. The program will run normally, and you can close the Julia terminal when you're done logging your videos.
+    where `<videos folder>` is the path to the folder that contains all the videos you want to log (so replace `<videos folder>` with the actual path to your videos folder). 
+3.  The program will run normally, and you can close the Julia terminal when you're done logging your videos.
 
 ## How to use
 
