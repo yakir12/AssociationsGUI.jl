@@ -16,7 +16,15 @@
 5. You can close the Julia-terminal after it's done running
 
 ## Quick start
-The user's interaction with this package is via GUI. Start a Julia terminal, copy: `include(joinpath(Pkg.dir("AssociationsGUI"), "src", "BeetleLog.jl"))`, and paste it in the Julia terminal. **Note the [Troubleshooting](#troubleshooting) section for problems with starting the program.** Navigate and choose the videos folder (choose a file inside the folder and press `Open`). 
+1. Start a Julia-terminal
+2. Copy and paste the following code in the Julia-terminal:
+    ```julia
+    using AssociationsGUI
+    folder = "<videos folder>"
+    main(folder)
+    ```
+where `<videos folder>` is the path to the folder that contains all the videos you want to log (so replace `<videos folder>` with the actual path to your videos folder). 
+3. The program will run normally, and you can close the Julia terminal when you're done logging your videos.
 
 ## How to use
 
@@ -124,15 +132,3 @@ That is all! You will now find a new folder, `log`, in the videos folder with 4 
 4. `associations.csv`: A two column table where the first column is the POI number and the second column is the Run number (both relative to the row numbers in the `pois.csv` and `runs.csv` files, excluding the header row of course). 
 
 If you need to add video files, POIs, or metadata for the Runs, you can do so even after finishing logging some data. While you can always remove POIs from the `poi.csv` file, you can not remove any of the metadata in the `run.csv` file, nor should you delete any of the video files.   
-## Troubleshooting
-- *The initial navigation window is stuck, I can't choose the videos folder*
-If this happens you'll have to run the program from within Julia:
-    1. Start a Julia-terminal
-    2. Copy and paste the following code in the Julia-terminal:
-       ```julia
-       using AssociationsGUI
-       folder = "<videos folder>"
-       main(folder)
-       ```
-       where `<videos folder>` is the path to the folder that contains all the videos you want to log (so replace `<videos folder>` with the actual path to your videos folder). 
-    3. The program will run normally, and you can close the Julia terminal when you're done logging your videos.
